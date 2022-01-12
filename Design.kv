@@ -5,42 +5,77 @@ BoxLayout:
     id: MainApp
     orientation: 'vertical'
 
+    # Описание цветовых схем
+    background_color_green: (0/255, 128/255, 0/255, 1)
+    background_color_yellow: (255/255, 255/255, 0/255, 1)
+    background_color_red: (255/255, 0/255, 0/255, 1)
+    background_color_grey_screen: (128/255, 128/255, 128/255, 1)
+    background_color_grey: (100/255, 100/255, 100/255, 1)
 
+    # Кнопки навигации
     BoxLayout:
         id: box_button
         orientation: 'horizontal'
         size_hint: 1, 0.1
 
-
+        # Кнопка Основной
         ToggleButton:
             group: 'screen'
             size_hint: 1, 1
             pos_hint: {'top': 1}
-            text: 'Screen view'
-            background_color: 1, 1, 1, 1
-            on_release: app.on_btn_screen_1()
-
-        ToggleButton:
-            group: 'screen'
-            size_hint: 1, 1
-            pos_hint: {'top': 1}
-            text: 'Screen send'
+            text: 'Основной'
             background_color: 1, 1, 1, 1
             on_release: app.on_btn_screen_2()
 
+        # Кнопка Настройки
         ToggleButton:
             group: 'screen'
             size_hint: 1, 1
             pos_hint: {'top': 1}
-            text: 'Screen settings'
+            text: 'Настройки'
+            background_color: 1, 1, 1, 1
+            on_release: app.on_btn_screen_1()
+
+        # Кнопка Cтатус
+        ToggleButton:
+            group: 'screen'
+            size_hint: 1, 1
+            pos_hint: {'top': 1}
+            text: 'Статус'
             background_color: 1, 1, 1, 1
             on_release: app.on_btn_screen_3()
 
+    # Описание оснвных экранов которые сдвигаются
+
+    # Экран "Нет связи"
     ScreenManager:
         id: sm
         on_parent: app.uiDict['sm'] = self
         Screen:
+            name: 'screen_no_connection'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey_screen
+				Rectangle:
+					size: self.size
+            BoxLayout:
+                orientation: 'vertical'
+                ScrollView:
+
+
+                    BoxLayout:
+                        Label:
+                            text: 'Нет связи с передачтиком'
+
+        # Экран "Настройки"
+        Screen:
             name: 'screen_view'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey_screen
+				Rectangle:
+					size: self.size
+
             BoxLayout:
                 orientation: 'vertical'
 
@@ -53,21 +88,23 @@ BoxLayout:
                         size_hint_y: None
                         height: max(self.minimum_height, self.parent.height)
 
+        # Экран "Основной"
         Screen:
             name: 'screen_send'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey_screen
+				Rectangle:
+					size: self.size
             BoxLayout:
+
                 orientation: 'vertical'
                 ScrollView:
-                    size_hint_y: None
-                    height: '1dp'
                 BoxLayout:
-                    orientation: 'horizontal'
-                    Label:
-                        text: 'this on top'
 
+                    orientation: 'horizontal'
                     BoxLayout:
                         orientation: 'vertical'
-
                         BoxLayout:
                             orientation: 'vertical'
                             TextInput:
@@ -77,9 +114,15 @@ BoxLayout:
                                 font_size: 60
                                 id: solution
                                 on_parent: app.uiDict['txtInput_write'] = self
-                                size_hint_y: .8
+                                size_hint_y: .1
                                 height: max(self.minimum_height, self.parent.height)
                                 text: '0'
+
+                    # Кнопки цифр
+                    BoxLayout:
+                        orientation: 'vertical'
+
+
                         BoxLayout:
                             Button:
                                 text: 'Авария'
@@ -138,8 +181,14 @@ BoxLayout:
                                 id: button_clear
                                 on_press: solution.text = app.on_button_press(button_clear.text,solution.text)
 
+        # Экран Стаус
         Screen:
             name: 'screen_settings'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey_screen
+				Rectangle:
+					size: self.size
             BoxLayout:
                 orientation: 'vertical'
                 ScrollView:
@@ -167,22 +216,78 @@ BoxLayout:
                         readonly: True
                         text: ''
 
+
+    # Панель состояний
     BoxLayout:
         orientation: 'horizontal'
-        size_hint_y: 0.05
+        size_hint_y: 0.1
+        canvas.before:
+		    Color:
+				rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Связь'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_green
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Ант 1'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_green
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Ант 2'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Ант 3'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Ант 4'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Название шахты'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: "Дата"
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
         Label:
             text: 'Время'
+            canvas.before:
+				Color:
+					rgba: MainApp.background_color_grey
+				Rectangle:
+					size: self.size
+					pos: self.pos
